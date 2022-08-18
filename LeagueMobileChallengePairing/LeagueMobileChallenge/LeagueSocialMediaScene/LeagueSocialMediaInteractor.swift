@@ -55,26 +55,21 @@ extension LeagueSocialMediaInteractor: LeagueSocialMediaInteracting {
             userName: "",
             password: "") { [weak self] response in
                 
-                guard let self = self else { return }
+            guard let self = self else { return }
+            switch response {
+            case .success:
+                self.service.fetchUsers { response in
                     switch response {
-                    case .success:
-                        
-                        self.service.fetchUsers { response in
-                            switch response {
                             
-                            case let .success(users):
-                                self.users = users
-                                self.service.fetchPosts { response in
-                                    switch response {
-                                    
-                                    case let .success(posts):
-                                        self.posts = posts
-                                        
-                                        self.presenter.present(self.socialMediaViewModel)
-                                    case .failure:
-                                        self.presenter.presentError()
-                                    }
-                                }
+                    case let .success(users):
+                        self.users = users
+                        self.service.fetchPosts { response in
+                        
+                            switch response {
+                            case let .success(posts):
+                                self.posts = posts
+                                self.presenter.present(self.socialMediaViewModel)
+                            
                             case .failure:
                                 self.presenter.presentError()
                             }
@@ -82,10 +77,13 @@ extension LeagueSocialMediaInteractor: LeagueSocialMediaInteracting {
                     case .failure:
                         self.presenter.presentError()
                     }
-                    
-                    self.presenter.hideLoading()
                 }
-       
+            case .failure:
+                self.presenter.presentError()
+            }
+                
+            self.presenter.hideLoading()
+        }
     }
     
     func prefechImages(indexPaths: [IndexPath]) {
