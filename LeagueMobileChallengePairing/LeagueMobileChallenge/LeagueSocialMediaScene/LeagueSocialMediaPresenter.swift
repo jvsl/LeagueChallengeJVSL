@@ -2,6 +2,11 @@ import Foundation
 
 protocol LeagueSocialMediaPresenting: AnyObject {
     var viewController: LeagueSocialMediaDisplaying? { get set }
+    
+    func present(_ posts: [SocialMediaViewModel])
+    func presentError()
+    func presentLoading()
+    func hideLoading()
 }
 
 final class LeagueSocialMediaPresenter {
@@ -13,4 +18,21 @@ final class LeagueSocialMediaPresenter {
     }
 }
 
-extension LeagueSocialMediaPresenter: LeagueSocialMediaPresenting {}
+extension LeagueSocialMediaPresenter: LeagueSocialMediaPresenting {
+    
+    func present(_ posts: [SocialMediaViewModel]) {
+        viewController?.display(posts)
+    }
+    
+    func presentError() {
+        coordinator.perform(action: .error)
+    }
+    
+    func presentLoading() {
+        viewController?.displayLoading()
+    }
+    
+    func hideLoading() {
+        viewController?.hideLoading()
+    }
+}
