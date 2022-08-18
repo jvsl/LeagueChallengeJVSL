@@ -1,6 +1,6 @@
 enum LeagueSocialMediaFactory {
     static func make() -> LeagueSocialMediaViewController {
-        let service: LeagueSocialMediaServicing = LeagueSocialMediaService()
+        let service: APIServicing = APIService()
         let coordinator: LeagueSocialMediaCoordinating = LeagueSocialMediaCoordinator()
         let presenter: LeagueSocialMediaPresenting = LeagueSocialMediaPresenter(coordinator: coordinator)
         let interactor = LeagueSocialMediaInteractor(service: service, presenter: presenter)
