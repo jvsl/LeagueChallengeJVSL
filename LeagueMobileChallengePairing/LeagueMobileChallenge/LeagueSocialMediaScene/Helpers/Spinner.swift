@@ -1,6 +1,6 @@
 import UIKit
 
-open class LLSpinner {
+final class LLSpinner {
     internal static var spinnerView: UIActivityIndicatorView?
     private static let style: UIActivityIndicatorView.Style = .whiteLarge
     private static let backgroundColor: UIColor = UIColor(white: 0, alpha: 0.6)
