@@ -68,12 +68,38 @@ class APIService: APIServicing {
         guard let url = URL(string: postAPI) else {
             return
         }
+        
+        guard userToken != nil else {
+            fetchUserToken(userName: "", password: "") { response in
+                switch response {
+                case .success:
+                    self.request(url, errorType: .post, completion: completion)
+                case let .failure(error):
+                    completion(.failure(error))
+                }
+            }
+            
+            return
+        }
 
         request(url, errorType: .post, completion: completion)
     }
     
     func fetchUsers(completion: @escaping UserCompletion) {
         guard let url = URL(string: userAPI) else {
+            return
+        }
+        
+        guard userToken != nil else {
+            fetchUserToken(userName: "", password: "") { response in
+                switch response {
+                case .success:
+                    self.request(url, errorType: .user, completion: completion)
+                case let .failure(error):
+                    completion(.failure(error))
+                }
+            }
+            
             return
         }
         
@@ -114,6 +140,7 @@ class APIService: APIServicing {
             completion(nil, nil)
             return
         }
+            
         let authHeader: HTTPHeaders = ["x-access-token" : userToken]
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: URLEncoding.default, headers: authHeader).responseJSON { (response) in
