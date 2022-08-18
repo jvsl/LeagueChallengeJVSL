@@ -9,7 +9,21 @@
 import Foundation
 import Alamofire
 
-class APIController {
+typealias LoginCompletion = (Swift.Result<Void, SocialMediaError>) -> Void
+typealias PostCompletion = (Swift.Result<[Post], SocialMediaError>) -> Void
+typealias UserCompletion = (Swift.Result<[User], SocialMediaError>) -> Void
+
+
+protocol APIServicing {
+    func fetchUserToken(
+        userName: String,
+        password: String,
+        completion: @escaping LoginCompletion)
+    func fetchPosts(completion: @escaping PostCompletion)
+    func fetchUsers(completion: @escaping UserCompletion)
+}
+
+class APIService: APIServicing {
     static let user = "user"
     static let password = "password"
     
@@ -18,11 +32,13 @@ class APIController {
     let postAPI = domain + "posts"
     let userAPI = domain + "users"
     
-    static let shared = APIController()
-    
     fileprivate var userToken: String?
     
-    func fetchUserToken(userName: String = "", password: String = "", completion: @escaping (String?, Error?) -> Void) {
+    func fetchUserToken(
+        userName: String = "",
+        password: String = "",
+        completion: @escaping LoginCompletion) {
+        
         guard let url = URL(string: loginAPI) else {
             return
         }
@@ -32,41 +48,67 @@ class APIController {
             headers[authorizationHeader.key] = authorizationHeader.value
         }
         
-        Alamofire.request(url, headers: headers).responseJSON { (response) in
+        Alamofire.request(url, headers: headers).responseJSON { [weak self] (response) in
+            guard let self = self else { return }
+            
             guard response.error == nil else {
-                completion(nil, response.error)
+                completion(.failure(.token))
                 return
             }
             
             if let value = response.result.value as? [AnyHashable : Any] {
                 self.userToken = value["api_key"] as? String
             }
-            completion(self.userToken, nil)
+            
+            completion(.success(Void()))
         }
     }
 
-    func fetchPosts(completion: @escaping (Any?, Error?) -> Void) {
+    func fetchPosts(completion: @escaping PostCompletion) {
         guard let url = URL(string: postAPI) else {
             return
         }
 
-        request(url: url) { data, error in
-            completion(data, error)
-        }
-
+        request(url, errorType: .post, completion: completion)
     }
-
-    func fetchUsers(completion: @escaping (Any?, Error?) -> Void) {
+    
+    func fetchUsers(completion: @escaping UserCompletion) {
         guard let url = URL(string: userAPI) else {
             return
         }
+        
+        request(url, errorType: .user, completion: completion)
+    }
 
-        request(url: url) { data, error in
-            completion(data, error)
+    private func request<T: Decodable>(
+        _ url: URL, errorType: SocialMediaError,
+        completion: @escaping (Swift.Result<T, SocialMediaError>) -> Void) {
+        
+        requestWithTokenValidation(url: url) { data, error in
+            guard error == nil else {
+                completion(.failure(errorType))
+                    
+                return
+            }
+                
+            guard let data = data else {
+                completion(.failure(.emptyData))
+                    
+                return
+            }
+                
+            do {
+                let data: T = try self.parse(from: data)
+                    completion(.success(data))
+            } catch {
+                    completion(.failure(.parse))
+            }
         }
     }
     
-    func request(url: URL, completion: @escaping (Data?, Error?) -> Void) {
+    private func requestWithTokenValidation(
+        url: URL, completion: @escaping (Data?, Error?) -> Void) {
+        
         guard let userToken = userToken else {
             NSLog("No user token set")
             completion(nil, nil)
@@ -75,7 +117,13 @@ class APIController {
         let authHeader: HTTPHeaders = ["x-access-token" : userToken]
         
         Alamofire.request(url, method: .get, parameters: nil, encoding: URLEncoding.default, headers: authHeader).responseJSON { (response) in
+            
             completion(response.data, response.error)
         }
+    }
+    
+    private func parse<T : Decodable>(from data: Data) throws -> T {
+        
+        return try JSONDecoder().decode(T.self, from: data)
     }
 }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -22,6 +22,10 @@
 		C50B57EA28AC928200370CE8 /* LeagueSocialMediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B57E428AC928200370CE8 /* LeagueSocialMediaViewController.swift */; };
 		C50B57EB28AC928200370CE8 /* LeagueSocialMediaInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B57E528AC928200370CE8 /* LeagueSocialMediaInteractor.swift */; };
 		C50B57EC28AC928200370CE8 /* LeagueSocialMediaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B57E628AC928200370CE8 /* LeagueSocialMediaService.swift */; };
+		C50B57EE28ADB1E000370CE8 /* SocialMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B57ED28ADB1E000370CE8 /* SocialMediaCell.swift */; };
+		C50B57F128ADC44D00370CE8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B57F028ADC44D00370CE8 /* User.swift */; };
+		C50B57F328ADC4CD00370CE8 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B57F228ADC4CD00370CE8 /* Post.swift */; };
+		C50B57F628ADC58800370CE8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B57F528ADC58800370CE8 /* Extensions.swift */; };
 		C711E601661AAB36D173F831 /* Pods_LeagueMobileChallenge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EC5EC130097654F1E0F3C6 /* Pods_LeagueMobileChallenge.framework */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +74,10 @@
 		C50B57E428AC928200370CE8 /* LeagueSocialMediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueSocialMediaViewController.swift; sourceTree = "<group>"; };
 		C50B57E528AC928200370CE8 /* LeagueSocialMediaInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueSocialMediaInteractor.swift; sourceTree = "<group>"; };
 		C50B57E628AC928200370CE8 /* LeagueSocialMediaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueSocialMediaService.swift; sourceTree = "<group>"; };
+		C50B57ED28ADB1E000370CE8 /* SocialMediaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialMediaCell.swift; sourceTree = "<group>"; };
+		C50B57F028ADC44D00370CE8 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		C50B57F228ADC4CD00370CE8 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		C50B57F528ADC58800370CE8 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D938A729EC8AE9651EAE0B00 /* Pods-LeagueMobileChallenge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeagueMobileChallenge.release.xcconfig"; path = "Pods/Target Support Files/Pods-LeagueMobileChallenge/Pods-LeagueMobileChallenge.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -181,14 +189,34 @@
 		C50B57E028AC918300370CE8 /* LeagueSocialMediaScene */ = {
 			isa = PBXGroup;
 			children = (
+				C50B57F428ADC57100370CE8 /* Extensions */,
+				C50B57EF28ADC44200370CE8 /* Models */,
 				C50B57E128AC928200370CE8 /* LeagueSocialMediaCoordinator.swift */,
 				C50B57E228AC928200370CE8 /* LeagueSocialMediaFactory.swift */,
 				C50B57E328AC928200370CE8 /* LeagueSocialMediaPresenter.swift */,
 				C50B57E428AC928200370CE8 /* LeagueSocialMediaViewController.swift */,
 				C50B57E528AC928200370CE8 /* LeagueSocialMediaInteractor.swift */,
 				C50B57E628AC928200370CE8 /* LeagueSocialMediaService.swift */,
+				C50B57ED28ADB1E000370CE8 /* SocialMediaCell.swift */,
 			);
 			path = LeagueSocialMediaScene;
+			sourceTree = "<group>";
+		};
+		C50B57EF28ADC44200370CE8 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C50B57F028ADC44D00370CE8 /* User.swift */,
+				C50B57F228ADC4CD00370CE8 /* Post.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C50B57F428ADC57100370CE8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C50B57F528ADC58800370CE8 /* Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -394,22 +422,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-LeagueMobileChallenge/Pods-LeagueMobileChallenge-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-LeagueMobileChallenge/Pods-LeagueMobileChallenge-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-LeagueMobileChallenge/Pods-LeagueMobileChallenge-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LeagueMobileChallenge/Pods-LeagueMobileChallenge-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LeagueMobileChallenge/Pods-LeagueMobileChallenge-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -420,12 +441,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				C50B57EC28AC928200370CE8 /* LeagueSocialMediaService.swift in Sources */,
+				C50B57F328ADC4CD00370CE8 /* Post.swift in Sources */,
 				C50B57E728AC928200370CE8 /* LeagueSocialMediaCoordinator.swift in Sources */,
 				C50B57EA28AC928200370CE8 /* LeagueSocialMediaViewController.swift in Sources */,
+				C50B57EE28ADB1E000370CE8 /* SocialMediaCell.swift in Sources */,
 				B6AC69A221ECEC740094A9B1 /* APIController.swift in Sources */,
 				B6AC694F21E6578D0094A9B1 /* AppDelegate.swift in Sources */,
+				C50B57F628ADC58800370CE8 /* Extensions.swift in Sources */,
 				C50B57EB28AC928200370CE8 /* LeagueSocialMediaInteractor.swift in Sources */,
 				C50B57E928AC928200370CE8 /* LeagueSocialMediaPresenter.swift in Sources */,
+				C50B57F128ADC44D00370CE8 /* User.swift in Sources */,
 				C50B57E828AC928200370CE8 /* LeagueSocialMediaFactory.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -605,6 +630,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RHN4E42P4E;
 				INFOPLIST_FILE = LeagueMobileChallenge/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -624,6 +650,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RHN4E42P4E;
 				INFOPLIST_FILE = LeagueMobileChallenge/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
