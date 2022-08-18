@@ -3,8 +3,8 @@ import Foundation
 protocol LeagueSocialMediaPresenting: AnyObject {
     var viewController: LeagueSocialMediaDisplaying? { get set }
     
-    func present(_ posts: [SocialMediaViewModel])
-    func presentError()
+    func presentPosts()
+    func presentError(retryAction: @escaping () -> Void)
     func presentLoading()
     func hideLoading()
 }
@@ -20,12 +20,12 @@ final class LeagueSocialMediaPresenter {
 
 extension LeagueSocialMediaPresenter: LeagueSocialMediaPresenting {
     
-    func present(_ posts: [SocialMediaViewModel]) {
-        viewController?.display(posts)
+    func presentPosts() {
+        viewController?.displayPosts()
     }
     
-    func presentError() {
-        coordinator.perform(action: .error)
+    func presentError(retryAction: @escaping () -> Void) {
+        coordinator.perform(action: .error(retry: retryAction))
     }
     
     func presentLoading() {
