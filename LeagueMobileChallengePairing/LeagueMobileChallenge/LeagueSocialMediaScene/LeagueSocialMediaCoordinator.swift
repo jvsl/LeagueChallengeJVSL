@@ -1,7 +1,7 @@
 import UIKit
 
 enum LeagueSocialMediaAction {
-    case back
+    case error
 }
 
 protocol LeagueSocialMediaCoordinating: AnyObject {
@@ -17,8 +17,10 @@ final class LeagueSocialMediaCoordinator {
 extension LeagueSocialMediaCoordinator: LeagueSocialMediaCoordinating {
     func perform(action: LeagueSocialMediaAction) {
         switch action {
-        case .back:
-            viewController?.navigationController?.popViewController(animated: true)
+        case .error:
+            let errorViewController = FullScreenErrorViewController()
+            viewController?.navigationController?.pushViewController(
+                errorViewController, animated: true)
         }
     }
 }
