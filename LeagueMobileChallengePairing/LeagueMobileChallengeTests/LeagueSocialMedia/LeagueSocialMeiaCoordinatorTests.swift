@@ -1,9 +1,18 @@
-//
-//  LeagueSocialMeiaCoordinatorTests.swift
-//  LeagueMobileChallengeTests
-//
-//  Created by joão lucas on 18/08/22.
-//  Copyright © 2022 Kelvin Lau. All rights reserved.
-//
+import XCTest
+@testable import LeagueMobileChallenge
 
-import Foundation
+final class LeagueSocialMediaCoordinatorTests: XCTestCase {
+    
+    var viewControllerSpy = ViewControllerSpy()
+    private lazy var sut: LeagueSocialMediaCoordinating = {
+        let coordinator = LeagueSocialMediaCoordinator()
+        coordinator.viewController = viewControllerSpy
+        return coordinator
+    }()
+    
+    func testActionRetry_action_shouldIncrementPresentControllerCounter() {
+        sut.perform(action: .error(retry: { print("RETRY") }))
+        
+        XCTAssertEqual(viewControllerSpy.callPresentControllerCount, 1)
+    }
+}
