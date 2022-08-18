@@ -1,7 +1,7 @@
 import UIKit
 
 enum LeagueSocialMediaAction {
-    case error
+    case error(retry: () -> Void)
 }
 
 protocol LeagueSocialMediaCoordinating: AnyObject {
@@ -17,10 +17,11 @@ final class LeagueSocialMediaCoordinator {
 extension LeagueSocialMediaCoordinator: LeagueSocialMediaCoordinating {
     func perform(action: LeagueSocialMediaAction) {
         switch action {
-        case .error:
+        case let .error(action):
             let errorViewController = FullScreenErrorViewController()
-            viewController?.navigationController?.pushViewController(
-                errorViewController, animated: true)
+            errorViewController.tryAgainAction = action
+            errorViewController.modalPresentationStyle = .fullScreen
+            viewController?.present(errorViewController, animated: true)
         }
     }
 }
