@@ -24,15 +24,6 @@ class LeagueMobileChallengeTests: XCTestCase {
         XCTAssertEqual(presenterSpy.didPresentPosts, 1)
     }
     
-    func testFetchPosts_whenUserTokenIsInValid_shouldPresentError() {
-        serviceMock.tokenResult = .failure(.token)
-        sut.fetchPosts()
-        
-        XCTAssertEqual(presenterSpy.didPresentLoading, 1)
-        XCTAssertEqual(presenterSpy.didHideLoading, 1)
-        XCTAssertEqual(presenterSpy.didPresentError, 1)
-    }
-    
     func testFetchPosts_whenUserFail_shouldPresentError() {
         serviceMock.usersResult = .failure(.user)
         sut.fetchPosts()
@@ -76,14 +67,12 @@ final class LeagueSocialMediaPresenterSpy: LeagueSocialMediaPresenting {
     var didPresentError = 0
     var didPresentLoading = 0
     var didHideLoading = 0
-    var socialMediaViewModel: [SocialMediaViewModel] = []
     
-    func present(_ posts: [SocialMediaViewModel]) {
+    func presentPosts() {
         didPresentPosts += 1
-        self.socialMediaViewModel = posts
     }
     
-    func presentError() {
+    func presentError(retryAction: () -> Void) {
         didPresentError += 1
     }
     
