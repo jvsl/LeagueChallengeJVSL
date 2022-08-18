@@ -2,7 +2,6 @@ import UIKit
 
 public final class ViewControllerSpy: UIViewController {
     public private(set) var callPresentControllerCount = 0
-    public private(set) var callDismissControllerCount = 0
     public private(set) var viewControllerPresented = UIViewController()
 
     public init() { super.init(nibName: nil, bundle: nil) }
@@ -17,10 +16,5 @@ public final class ViewControllerSpy: UIViewController {
         callPresentControllerCount += 1
         viewControllerPresented = viewControllerToPresent
         super.present(viewControllerToPresent, animated: flag, completion: completion)
-    }
-
-    override public func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
-        callDismissControllerCount += 1
-        super.dismiss(animated: flag, completion: completion)
     }
 }
