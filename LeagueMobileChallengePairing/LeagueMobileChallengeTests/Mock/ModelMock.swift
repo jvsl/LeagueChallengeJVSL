@@ -1,9 +1,13 @@
-//
-//  ModelMock.swift
-//  LeagueMobileChallengeTests
-//
-//  Created by joão lucas on 18/08/22.
-//  Copyright © 2022 Kelvin Lau. All rights reserved.
-//
+@testable import LeagueMobileChallenge
 
-import Foundation
+extension Post {
+    static func fixture() -> Post {
+        Post(userID: 1, id: 1, title: "title", body: "body")
+    }
+}
+
+extension User {
+    static func fixture() -> User {
+        User(id: 1, avatar: "avatar", username: "name")
+    }
+}
