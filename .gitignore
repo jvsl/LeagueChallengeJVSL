@@ -1,0 +1,5 @@
+*.DS_Store
+*.dSYM.zip
+
+Pods/Pods.xcodeproj/xcuserdata/
+*/targets.yml-e
