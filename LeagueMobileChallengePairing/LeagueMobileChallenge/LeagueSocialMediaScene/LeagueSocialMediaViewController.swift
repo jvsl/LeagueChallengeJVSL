@@ -1,7 +1,7 @@
 import UIKit
 
 protocol LeagueSocialMediaDisplaying: AnyObject {
-    func display(_ posts: [SocialMediaViewModel])
+    func displayPosts()
     func displayLoading()
     func hideLoading()
 }
@@ -16,8 +16,7 @@ private extension LeagueSocialMediaViewController.Layout {
 final class LeagueSocialMediaViewController: UIViewController {
     enum Layout { }
     private let interactor: LeagueSocialMediaInteracting
-    private let tableView = UITableView()
-    private lazy var dataSource = makeDataSource()
+    fileprivate let tableView = UITableView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +34,7 @@ final class LeagueSocialMediaViewController: UIViewController {
         view.addSubview(tableView)
         
         tableView.prefetchDataSource = self
-        tableView.dataSource = self.dataSource
+        tableView.dataSource = self
         tableView.separatorStyle = .singleLine
         tableView.register(
             SocialMediaCell.self,
@@ -56,55 +55,46 @@ final class LeagueSocialMediaViewController: UIViewController {
     }
 }
 
-extension LeagueSocialMediaViewController {
-    func updateDataSource(data: [SocialMediaViewModel]) {
-        var snapshot = NSDiffableDataSourceSnapshot<Int, SocialMediaViewModel>()
-        snapshot.appendSections([0])
-        snapshot.appendItems(data)
-      
-        dataSource.apply(snapshot, animatingDifferences: false)
-    }
-}
-
 extension LeagueSocialMediaViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         interactor.prefechImages(indexPaths: indexPaths)
-        print("PREFETCHING \(indexPaths)")
     }
-    
     
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
         interactor.cancelPrefetchingImages(indexPaths: indexPaths)
-        print("CANCEL PREFETCHING \(indexPaths)")
     }
 }
 
-private extension LeagueSocialMediaViewController {
-    func makeDataSource() -> UITableViewDiffableDataSource<Int, SocialMediaViewModel> {
-
-        return UITableViewDiffableDataSource(
-            tableView: tableView,
-            cellProvider: {  tableView, indexPath, repository in
-                let cell = tableView.dequeueReusableCell(
-                    withIdentifier: SocialMediaCell.reuseIdentifier,
-                    for: indexPath
-                ) as? SocialMediaCell
-                
-                cell?.setup(viewModel: repository)
-
-                return cell
-            }
-        )
+extension LeagueSocialMediaViewController: UITableViewDataSource, LeagueSocialMediaDisplaying {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return interactor.numberOfRows
     }
-}
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(
+            withIdentifier: SocialMediaCell.reuseIdentifier,
+            for: indexPath
+        ) as? SocialMediaCell
+        
+        let viewModel = interactor.socialMediaViewModelData()[indexPath.row]
+        cell?.setup(viewModel: viewModel)
+        
+        return cell ?? UITableViewCell()
+    }
 
-extension LeagueSocialMediaViewController: LeagueSocialMediaDisplaying {
-    func display(_ posts: [SocialMediaViewModel]) {
-        updateDataSource(data: posts)
+    func displayPosts() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
     func displayLoading() {
-        LLSpinner.spin(style: .large, backgroundColor: UIColor(white: 0, alpha: 0.6))
+        if #available(iOS 13.0, *) {
+            LLSpinner.spin(style: .large, backgroundColor: UIColor(white: 0, alpha: 0.6))
+        } else {
+            LLSpinner.spin(style: .whiteLarge, backgroundColor: UIColor(white: 0, alpha: 0.6))
+        }
     }
     
     func hideLoading() {
