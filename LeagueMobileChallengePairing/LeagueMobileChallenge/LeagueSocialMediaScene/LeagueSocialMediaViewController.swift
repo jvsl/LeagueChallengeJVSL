@@ -1,6 +1,10 @@
 import UIKit
 
-protocol LeagueSocialMediaDisplaying: AnyObject {}
+protocol LeagueSocialMediaDisplaying: AnyObject {
+    func display(_ posts: [SocialMediaViewModel])
+    func displayLoading()
+    func hideLoading()
+}
 
 private extension LeagueSocialMediaViewController.Layout {
 
@@ -19,7 +23,7 @@ final class LeagueSocialMediaViewController: UIViewController {
         super.viewDidLoad()
         title = "Posts"
         setupTableView()
-        updateDataSource()
+        interactor.fetchPosts()
     }
     
     init(interactor: LeagueSocialMediaInteracting) {
@@ -31,7 +35,6 @@ final class LeagueSocialMediaViewController: UIViewController {
         view.addSubview(tableView)
         
         tableView.prefetchDataSource = self
-        tableView.delegate = self
         tableView.dataSource = self.dataSource
         tableView.separatorStyle = .singleLine
         tableView.register(
@@ -54,26 +57,25 @@ final class LeagueSocialMediaViewController: UIViewController {
 }
 
 extension LeagueSocialMediaViewController {
-    func updateDataSource() {
+    func updateDataSource(data: [SocialMediaViewModel]) {
         var snapshot = NSDiffableDataSourceSnapshot<Int, SocialMediaViewModel>()
         snapshot.appendSections([0])
-        snapshot.appendItems([.fixture(), .fixture(), .fixture()])
+        snapshot.appendItems(data)
       
         dataSource.apply(snapshot, animatingDifferences: false)
     }
 }
 
-extension LeagueSocialMediaViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       
-    }
-}
-
 extension LeagueSocialMediaViewController: UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-  }
+        interactor.prefechImages(indexPaths: indexPaths)
+        print("PREFETCHING \(indexPaths)")
+    }
+    
     
     func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
+        interactor.cancelPrefetchingImages(indexPaths: indexPaths)
+        print("CANCEL PREFETCHING \(indexPaths)")
     }
 }
 
@@ -96,4 +98,16 @@ private extension LeagueSocialMediaViewController {
     }
 }
 
-extension LeagueSocialMediaViewController: LeagueSocialMediaDisplaying {}
+extension LeagueSocialMediaViewController: LeagueSocialMediaDisplaying {
+    func display(_ posts: [SocialMediaViewModel]) {
+        updateDataSource(data: posts)
+    }
+    
+    func displayLoading() {
+        LLSpinner.spin(style: .large, backgroundColor: UIColor(white: 0, alpha: 0.6))
+    }
+    
+    func hideLoading() {
+        LLSpinner.stop()
+    }
+}
