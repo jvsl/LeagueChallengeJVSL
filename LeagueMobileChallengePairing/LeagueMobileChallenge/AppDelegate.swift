@@ -17,7 +17,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
-        // Override point for customization after application launch.
+        let rootViewController = LeagueSocialMediaFactory.make()
+        let navigationViewController = UINavigationController(rootViewController: rootViewController)
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = navigationViewController
+        window?.makeKeyAndVisible()
+        
         return true
     }
 
