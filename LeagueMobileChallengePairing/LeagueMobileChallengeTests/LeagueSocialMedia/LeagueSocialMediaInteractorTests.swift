@@ -24,8 +24,8 @@ class LeagueMobileChallengeTests: XCTestCase {
         XCTAssertEqual(presenterSpy.didPresentPosts, 1)
     }
     
-    func testFetchPosts_whenUserTokenIsInValid_() {
-        serviceMock.usersResult = .failure(.user)
+    func testFetchPosts_whenUserTokenIsInValid_shouldPresentError() {
+        serviceMock.tokenResult = .failure(.token)
         sut.fetchPosts()
         
         XCTAssertEqual(presenterSpy.didPresentLoading, 1)
@@ -33,7 +33,16 @@ class LeagueMobileChallengeTests: XCTestCase {
         XCTAssertEqual(presenterSpy.didPresentError, 1)
     }
     
-    func testFetchUsers_whenUserFailure() {
+    func testFetchPosts_whenUserFail_shouldPresentError() {
+        serviceMock.usersResult = .failure(.user)
+        sut.fetchPosts()
+        
+        XCTAssertEqual(presenterSpy.didPresentLoading, 1)
+        XCTAssertEqual(presenterSpy.didHideLoading, 1)
+        XCTAssertEqual(presenterSpy.didPresentError, 1)
+    }
+
+    func testFetchPosts_whenPostFail_shouldPresentError() {
         serviceMock.postsResult = .failure(.post)
         sut.fetchPosts()
         
