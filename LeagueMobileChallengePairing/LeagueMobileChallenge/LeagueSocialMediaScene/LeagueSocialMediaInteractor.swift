@@ -14,6 +14,9 @@ protocol LeagueSocialMediaInteracting: AnyObject {
     func fetchPosts()
     func prefechImages(indexPaths: [IndexPath])
     func cancelPrefetchingImages(indexPaths: [IndexPath])
+    
+    func socialMediaViewModelData() -> [SocialMediaViewModel]
+    var numberOfRows: Int { get }
 }
 
 final class LeagueSocialMediaInteractor {
@@ -21,7 +24,12 @@ final class LeagueSocialMediaInteractor {
     private let presenter: LeagueSocialMediaPresenting
     private var users: [User] = []
     private var posts: [Post] = []
-    private lazy var socialMediaViewModel: [SocialMediaViewModel] = {
+    
+    var numberOfRows: Int {
+        return socialMediaViewModelData().count
+    }
+    
+    func socialMediaViewModelData() -> [SocialMediaViewModel] {
         var socialMediaPosts: [SocialMediaViewModel] = []
         
         posts.forEach { post in
@@ -37,7 +45,7 @@ final class LeagueSocialMediaInteractor {
         }
         
         return socialMediaPosts
-    }()
+    }
 
     init(service: APIServicing, presenter: LeagueSocialMediaPresenting) {
         self.service = service
@@ -45,55 +53,43 @@ final class LeagueSocialMediaInteractor {
     }
 }
 
-
 extension LeagueSocialMediaInteractor: LeagueSocialMediaInteracting {
     
     func fetchPosts() {
         presenter.presentLoading()
-        
-        service.fetchUserToken(
-            userName: "",
-            password: "") { [weak self] response in
-                
+       
+        self.service.fetchUsers { [weak self] response in
             guard let self = self else { return }
+
             switch response {
-            case .success:
-                self.service.fetchUsers { response in
+            case let .success(users):
+                self.users = users
+                self.service.fetchPosts { response in
+                    self.presenter.hideLoading()
                     switch response {
-                            
-                    case let .success(users):
-                        self.users = users
-                        self.service.fetchPosts { response in
-                        
-                            switch response {
-                            case let .success(posts):
-                                self.posts = posts
-                                self.presenter.present(self.socialMediaViewModel)
-                            
-                            case .failure:
-                                self.presenter.presentError()
-                            }
-                        }
+                    case let .success(posts):
+                        self.posts = posts
+                        self.presenter.presentPosts()
                     case .failure:
-                        self.presenter.presentError()
+                        self.presenter.presentError(retryAction: self.fetchPosts)
                     }
                 }
-            case .failure:
-                self.presenter.presentError()
-            }
                 
-            self.presenter.hideLoading()
+            case .failure:
+                self.presenter.presentError(retryAction: self.fetchPosts)
+                self.presenter.hideLoading()
+            }
         }
     }
     
     func prefechImages(indexPaths: [IndexPath]) {
-        let urls = indexPaths.compactMap { self.socialMediaViewModel[$0.row].avatarURL }
+        let urls = indexPaths.compactMap { self.socialMediaViewModelData()[$0.row].avatarURL }
         ImagePrefetcher(urls: urls).start()
         
     }
     
     func cancelPrefetchingImages(indexPaths: [IndexPath]) {
-        let urls = indexPaths.compactMap { socialMediaViewModel[$0.row].avatarURL }
+        let urls = indexPaths.compactMap { self.socialMediaViewModelData()[$0.row].avatarURL }
         ImagePrefetcher(urls: urls).stop()
     }
 }
