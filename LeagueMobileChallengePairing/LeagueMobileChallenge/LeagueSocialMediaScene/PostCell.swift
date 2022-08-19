@@ -13,8 +13,17 @@ struct PostViewModel: Hashable {
     }
 }
 
+private extension PostCell.Layout {
+
+    enum Constants {
+        static let avatarSize: CGFloat = 50
+        static let mainContainerPadding: CGFloat = 16
+        static let stackSpacing: CGFloat = 10
+    }
+}
+
 final class PostCell: UITableViewCell, ReusableView {
-    
+    enum Layout { }
     private lazy var userNameLabel = makeLabel()
     private lazy var titleLabel = makeLabel()
     private lazy var descriptionLabel = makeLabel()
@@ -32,29 +41,9 @@ final class PostCell: UITableViewCell, ReusableView {
         return imageView
     }()
     
-    private var postLabelContainer: UIStackView = {
-        let stack = UIStackView()
-        stack.spacing = 10
-        stack.axis = .horizontal
-        
-        return stack
-    }()
-    
-    private var avatarContainer: UIStackView = {
-        let stack = UIStackView()
-        stack.spacing = 10
-        stack.axis = .horizontal
-        
-        return stack
-    }()
-    
-    private var mainContainer: UIStackView = {
-        let stack = UIStackView()
-        stack.spacing = 10
-        stack.axis = .vertical
-        
-        return stack
-    }()
+    private lazy var postLabelContainer = makeStackView(.horizontal)
+    private lazy var avatarContainer = makeStackView(.horizontal)
+    private lazy var mainContainer: UIStackView = makeStackView(.vertical)
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -66,11 +55,10 @@ final class PostCell: UITableViewCell, ReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func makeLabel() -> UILabel {
-        let label = UILabel()
-        label.numberOfLines = 0
+    override func prepareForReuse() {
+        super.prepareForReuse()
         
-        return label
+        resetPropertieValues()
     }
     
     func setup(viewModel: PostViewModel) {
@@ -80,9 +68,19 @@ final class PostCell: UITableViewCell, ReusableView {
         avatarImage.kf.setImage(with: viewModel.avatarURL)
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        resetPropertieValues()
+    private func makeLabel() -> UILabel {
+        let label = UILabel()
+        label.numberOfLines = 0
+        
+        return label
+    }
+    
+    private func makeStackView(_ axis: NSLayoutConstraint.Axis) -> UIStackView {
+        let stack = UIStackView()
+        stack.spacing = Layout.Constants.stackSpacing
+        stack.axis = axis
+        
+        return stack
     }
     
     private func resetPropertieValues() {
@@ -102,10 +100,10 @@ extension PostCell: ViewCoding {
     
     func addConstraints() {
         mainContainer.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(16)
+            $0.edges.equalToSuperview().inset(Layout.Constants.mainContainerPadding)
         }
         avatarImage.snp.makeConstraints {
-            $0.width.height.equalTo(50)
+            $0.width.height.equalTo(Layout.Constants.avatarSize)
         }
     }
     
