@@ -15,14 +15,13 @@
 		B6AC695C21E6578F0094A9B1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B6AC695A21E6578F0094A9B1 /* LaunchScreen.storyboard */; };
 		B6AC696721E6578F0094A9B1 /* LeagueSocialMediaInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC696621E6578F0094A9B1 /* LeagueSocialMediaInteractorTests.swift */; };
 		B6AC697221E6578F0094A9B1 /* LeagueMobileChallengeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC697121E6578F0094A9B1 /* LeagueMobileChallengeUITests.swift */; };
-		B6AC69A221ECEC740094A9B1 /* APIController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6AC69A121ECEC740094A9B1 /* APIController.swift */; };
 		C50B57E728AC928200370CE8 /* LeagueSocialMediaCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B57E128AC928200370CE8 /* LeagueSocialMediaCoordinator.swift */; };
 		C50B57E828AC928200370CE8 /* LeagueSocialMediaFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B57E228AC928200370CE8 /* LeagueSocialMediaFactory.swift */; };
 		C50B57E928AC928200370CE8 /* LeagueSocialMediaPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B57E328AC928200370CE8 /* LeagueSocialMediaPresenter.swift */; };
 		C50B57EA28AC928200370CE8 /* LeagueSocialMediaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B57E428AC928200370CE8 /* LeagueSocialMediaViewController.swift */; };
 		C50B57EB28AC928200370CE8 /* LeagueSocialMediaInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B57E528AC928200370CE8 /* LeagueSocialMediaInteractor.swift */; };
 		C50B57EC28AC928200370CE8 /* LeagueSocialMediaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B57E628AC928200370CE8 /* LeagueSocialMediaService.swift */; };
-		C50B57EE28ADB1E000370CE8 /* SocialMediaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B57ED28ADB1E000370CE8 /* SocialMediaCell.swift */; };
+		C50B57EE28ADB1E000370CE8 /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B57ED28ADB1E000370CE8 /* PostCell.swift */; };
 		C50B57F128ADC44D00370CE8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B57F028ADC44D00370CE8 /* User.swift */; };
 		C50B57F328ADC4CD00370CE8 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B57F228ADC4CD00370CE8 /* Post.swift */; };
 		C50B57F628ADC58800370CE8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B57F528ADC58800370CE8 /* Extensions.swift */; };
@@ -35,6 +34,7 @@
 		C50B580B28AEF6BF00370CE8 /* ViewControllerSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B580928AEF6BF00370CE8 /* ViewControllerSpy.swift */; };
 		C50B580E28AEF81B00370CE8 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50B580D28AEF81B00370CE8 /* Alamofire.framework */; };
 		C50B581028AEF82F00370CE8 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C50B580F28AEF82F00370CE8 /* Alamofire.framework */; };
+		C50B581228AF0B3900370CE8 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50B581128AF0B3900370CE8 /* Parser.swift */; };
 		C711E601661AAB36D173F831 /* Pods_LeagueMobileChallenge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5EC5EC130097654F1E0F3C6 /* Pods_LeagueMobileChallenge.framework */; };
 /* End PBXBuildFile section */
 
@@ -76,14 +76,13 @@
 		B6AC696D21E6578F0094A9B1 /* LeagueMobileChallengeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LeagueMobileChallengeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6AC697121E6578F0094A9B1 /* LeagueMobileChallengeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueMobileChallengeUITests.swift; sourceTree = "<group>"; };
 		B6AC697321E6578F0094A9B1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B6AC69A121ECEC740094A9B1 /* APIController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIController.swift; sourceTree = "<group>"; };
 		C50B57E128AC928200370CE8 /* LeagueSocialMediaCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueSocialMediaCoordinator.swift; sourceTree = "<group>"; };
 		C50B57E228AC928200370CE8 /* LeagueSocialMediaFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueSocialMediaFactory.swift; sourceTree = "<group>"; };
 		C50B57E328AC928200370CE8 /* LeagueSocialMediaPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueSocialMediaPresenter.swift; sourceTree = "<group>"; };
 		C50B57E428AC928200370CE8 /* LeagueSocialMediaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueSocialMediaViewController.swift; sourceTree = "<group>"; };
 		C50B57E528AC928200370CE8 /* LeagueSocialMediaInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueSocialMediaInteractor.swift; sourceTree = "<group>"; };
 		C50B57E628AC928200370CE8 /* LeagueSocialMediaService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueSocialMediaService.swift; sourceTree = "<group>"; };
-		C50B57ED28ADB1E000370CE8 /* SocialMediaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialMediaCell.swift; sourceTree = "<group>"; };
+		C50B57ED28ADB1E000370CE8 /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		C50B57F028ADC44D00370CE8 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C50B57F228ADC4CD00370CE8 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		C50B57F528ADC58800370CE8 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -96,6 +95,7 @@
 		C50B580928AEF6BF00370CE8 /* ViewControllerSpy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerSpy.swift; sourceTree = "<group>"; };
 		C50B580D28AEF81B00370CE8 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C50B580F28AEF82F00370CE8 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C50B581128AF0B3900370CE8 /* Parser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 		D938A729EC8AE9651EAE0B00 /* Pods-LeagueMobileChallenge.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LeagueMobileChallenge.release.xcconfig"; path = "Pods/Target Support Files/Pods-LeagueMobileChallenge/Pods-LeagueMobileChallenge.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -179,9 +179,10 @@
 		B6AC694D21E6578D0094A9B1 /* LeagueMobileChallenge */ = {
 			isa = PBXGroup;
 			children = (
+				C50B57F428ADC57100370CE8 /* Extensions */,
+				C50B57FA28AE068C00370CE8 /* Helpers */,
 				C50B57E028AC918300370CE8 /* LeagueSocialMediaScene */,
 				B6AC694E21E6578D0094A9B1 /* AppDelegate.swift */,
-				B6AC69A121ECEC740094A9B1 /* APIController.swift */,
 				B6AC695221E6578D0094A9B1 /* Main.storyboard */,
 				B6AC695821E6578F0094A9B1 /* Assets.xcassets */,
 				B6AC695A21E6578F0094A9B1 /* LaunchScreen.storyboard */,
@@ -213,9 +214,7 @@
 		C50B57E028AC918300370CE8 /* LeagueSocialMediaScene */ = {
 			isa = PBXGroup;
 			children = (
-				C50B57FA28AE068C00370CE8 /* Helpers */,
 				C50B57F728AE05C900370CE8 /* Error */,
-				C50B57F428ADC57100370CE8 /* Extensions */,
 				C50B57EF28ADC44200370CE8 /* Models */,
 				C50B57E128AC928200370CE8 /* LeagueSocialMediaCoordinator.swift */,
 				C50B57E228AC928200370CE8 /* LeagueSocialMediaFactory.swift */,
@@ -223,7 +222,7 @@
 				C50B57E428AC928200370CE8 /* LeagueSocialMediaViewController.swift */,
 				C50B57E528AC928200370CE8 /* LeagueSocialMediaInteractor.swift */,
 				C50B57E628AC928200370CE8 /* LeagueSocialMediaService.swift */,
-				C50B57ED28ADB1E000370CE8 /* SocialMediaCell.swift */,
+				C50B57ED28ADB1E000370CE8 /* PostCell.swift */,
 			);
 			path = LeagueSocialMediaScene;
 			sourceTree = "<group>";
@@ -257,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				C50B57FB28AE069800370CE8 /* Spinner.swift */,
+				C50B581128AF0B3900370CE8 /* Parser.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -511,11 +511,11 @@
 			files = (
 				C50B57EC28AC928200370CE8 /* LeagueSocialMediaService.swift in Sources */,
 				C50B57F328ADC4CD00370CE8 /* Post.swift in Sources */,
+				C50B581228AF0B3900370CE8 /* Parser.swift in Sources */,
 				C50B57E728AC928200370CE8 /* LeagueSocialMediaCoordinator.swift in Sources */,
 				C50B57FC28AE069800370CE8 /* Spinner.swift in Sources */,
 				C50B57EA28AC928200370CE8 /* LeagueSocialMediaViewController.swift in Sources */,
-				C50B57EE28ADB1E000370CE8 /* SocialMediaCell.swift in Sources */,
-				B6AC69A221ECEC740094A9B1 /* APIController.swift in Sources */,
+				C50B57EE28ADB1E000370CE8 /* PostCell.swift in Sources */,
 				B6AC694F21E6578D0094A9B1 /* AppDelegate.swift in Sources */,
 				C50B57F628ADC58800370CE8 /* Extensions.swift in Sources */,
 				C50B57F928AE05DC00370CE8 /* FullScreenErrorViewController.swift in Sources */,
