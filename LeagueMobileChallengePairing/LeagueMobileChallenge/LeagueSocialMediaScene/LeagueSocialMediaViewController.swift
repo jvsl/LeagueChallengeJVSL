@@ -37,8 +37,8 @@ final class LeagueSocialMediaViewController: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .singleLine
         tableView.register(
-            SocialMediaCell.self,
-            forCellReuseIdentifier: SocialMediaCell.reuseIdentifier)
+            PostCell.self,
+            forCellReuseIdentifier: PostCell.reuseIdentifier)
     
         tableView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -73,9 +73,9 @@ extension LeagueSocialMediaViewController: UITableViewDataSource, LeagueSocialMe
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: SocialMediaCell.reuseIdentifier,
+            withIdentifier: PostCell.reuseIdentifier,
             for: indexPath
-        ) as? SocialMediaCell
+        ) as? PostCell
         
         let viewModel = interactor.socialMediaViewModelData()[indexPath.row]
         cell?.setup(viewModel: viewModel)

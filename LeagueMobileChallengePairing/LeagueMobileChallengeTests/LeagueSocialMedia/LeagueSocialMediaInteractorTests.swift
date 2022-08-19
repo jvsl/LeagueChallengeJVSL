@@ -43,7 +43,7 @@ class LeagueMobileChallengeTests: XCTestCase {
     }
 }
 
-final class LeagueAPIServiceMock: APIServicing {
+final class LeagueAPIServiceMock: LeagueSocialMediaServicing {
     var tokenResult: Result<Void, SocialMediaError> = .success(Void())
     var postsResult: Result<[Post], SocialMediaError> = .success([.fixture()])
     var usersResult: Result<[User], SocialMediaError> = .success([.fixture()])

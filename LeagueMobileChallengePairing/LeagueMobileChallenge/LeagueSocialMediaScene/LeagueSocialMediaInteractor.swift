@@ -15,12 +15,12 @@ protocol LeagueSocialMediaInteracting: AnyObject {
     func prefechImages(indexPaths: [IndexPath])
     func cancelPrefetchingImages(indexPaths: [IndexPath])
     
-    func socialMediaViewModelData() -> [SocialMediaViewModel]
+    func socialMediaViewModelData() -> [PostViewModel]
     var numberOfRows: Int { get }
 }
 
 final class LeagueSocialMediaInteractor {
-    private let service: APIServicing
+    private let service: LeagueSocialMediaServicing
     private let presenter: LeagueSocialMediaPresenting
     private var users: [User] = []
     private var posts: [Post] = []
@@ -29,13 +29,13 @@ final class LeagueSocialMediaInteractor {
         return socialMediaViewModelData().count
     }
     
-    func socialMediaViewModelData() -> [SocialMediaViewModel] {
-        var socialMediaPosts: [SocialMediaViewModel] = []
+    func socialMediaViewModelData() -> [PostViewModel] {
+        var socialMediaPosts: [PostViewModel] = []
         
         posts.forEach { post in
             let user = users.first { $0.id == post.userID }
             socialMediaPosts.append(
-                SocialMediaViewModel(
+                PostViewModel(
                     userName: user?.username ?? "",
                     title: post.title,
                     description: post.body,
@@ -47,7 +47,7 @@ final class LeagueSocialMediaInteractor {
         return socialMediaPosts
     }
 
-    init(service: APIServicing, presenter: LeagueSocialMediaPresenting) {
+    init(service: LeagueSocialMediaServicing, presenter: LeagueSocialMediaPresenting) {
         self.service = service
         self.presenter = presenter
     }

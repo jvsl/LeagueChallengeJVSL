@@ -2,8 +2,7 @@ import UIKit
 import SnapKit
 import Kingfisher
 
-struct SocialMediaViewModel: Hashable {
-    let id = UUID()
+struct PostViewModel: Hashable {
     let userName: String
     let title: String
     let description: String
@@ -14,7 +13,7 @@ struct SocialMediaViewModel: Hashable {
     }
 }
 
-final class SocialMediaCell: UITableViewCell, ReusableView {
+final class PostCell: UITableViewCell, ReusableView {
     
     private lazy var userNameLabel = makeLabel()
     private lazy var titleLabel = makeLabel()
@@ -74,7 +73,7 @@ final class SocialMediaCell: UITableViewCell, ReusableView {
         return label
     }
     
-    func setup(viewModel: SocialMediaViewModel) {
+    func setup(viewModel: PostViewModel) {
         userNameLabel.text = viewModel.userName
         titleLabel.text = viewModel.title
         descriptionLabel.text = viewModel.description
@@ -94,7 +93,7 @@ final class SocialMediaCell: UITableViewCell, ReusableView {
     }
 }
 
-extension SocialMediaCell: ViewCoding {
+extension PostCell: ViewCoding {
     func addSubviews() {
         contentView.addSubview(mainContainer)
         mainContainer.addArrangedSubviews(avatarContainer, titleLabel, descriptionLabel)
