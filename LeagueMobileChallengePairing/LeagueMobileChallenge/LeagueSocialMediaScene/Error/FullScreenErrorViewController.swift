@@ -29,10 +29,10 @@ final class FullScreenErrorViewController: UIViewController {
     private var tryAgainButton: UIButton = {
         let button = UIButton()
         button.setTitle("Try again", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = .magenta.withAlphaComponent(0.7)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = UIColor(red: 148/255.0, green: 55/255.0, blue: 1, alpha: 1.0)
         button.layer.cornerRadius = 8
-        button.titleLabel?.font = UIFont(name: "Verdana", size: 16)
+        button.titleLabel?.font = UIFont(name: "Verdana-Bold", size: 16)
         button.addTarget(self, action: #selector(didTapTryAgainButton), for: .touchUpInside)
         return button
     }()
